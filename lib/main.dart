@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +17,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _heightController = TextEditingController();
+
+  final TextEditingController _weightController = TextEditingController();
+
+  late double _bmiResult = 0;
+
+  late String _textResult = '';
 
   @override
   Widget build(BuildContext context) {
@@ -46,33 +60,36 @@ class MyHomePage extends StatelessWidget {
                     color: Colors.black,
                     height: 90.0,
                     width: 110.0,
-                    child: const TextField(
+                    child: TextField(
+                      controller: _heightController,
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.yellow, fontSize: 35.0),
-                      decoration: InputDecoration(
+                      style:
+                          const TextStyle(color: Colors.yellow, fontSize: 35.0),
+                      decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Height',
+                          hintText: 'Height in CM',
                           hintStyle: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              fontSize: 35.0)),
+                              fontSize: 15.0)),
                     ),
                   ),
                   Container(
                     color: Colors.black,
                     height: 90.0,
                     width: 110.0,
-                    child: const TextField(
+                    child: TextField(
+                      controller: _weightController,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.yellow,
                         fontSize: 35.0,
                       ),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Weight',
+                          hintText: 'Weight in KG',
                           hintStyle: TextStyle(
-                              fontSize: 35,
+                              fontSize: 15.0,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold)),
                     ),
@@ -84,7 +101,20 @@ class MyHomePage extends StatelessWidget {
           Flexible(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(primary: Colors.black),
-              onPressed: () {},
+              onPressed: () {
+                double height = double.parse(_heightController.text);
+                double weight = double.parse(_weightController.text);
+                setState(() {
+                  _bmiResult = weight / pow(height / 100, 2);
+                  if (_bmiResult > 25) {
+                    _textResult = 'You Are Overweight !!';
+                  } else if (_bmiResult >= 18.5 && _bmiResult <= 25) {
+                    _textResult = 'Your Weight is Normal !';
+                  } else {
+                    _textResult = 'You Are Underweight !!';
+                  }
+                });
+              },
               child: const Text(
                 'Calculate',
                 style: TextStyle(
@@ -99,10 +129,10 @@ class MyHomePage extends StatelessWidget {
               height: 50.0,
             ),
           ),
-          const Flexible(
+          Flexible(
             child: Text(
-              '0',
-              style: TextStyle(color: Colors.yellow, fontSize: 30.0),
+              _bmiResult.toStringAsFixed(1),
+              style: const TextStyle(color: Colors.yellow, fontSize: 30.0),
             ),
           ),
           const Flexible(
@@ -110,10 +140,13 @@ class MyHomePage extends StatelessWidget {
               height: 50.0,
             ),
           ),
-          const Flexible(
-            child: Text(
-              'Normal Weight!',
-              style: TextStyle(fontSize: 23, color: Colors.yellow),
+          Flexible(
+            child: Visibility(
+              visible: _textResult.isNotEmpty,
+              child: Text(
+                _textResult,
+                style: const TextStyle(fontSize: 23, color: Colors.yellow),
+              ),
             ),
           ),
           const Flexible(
