@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// this is for math actions
 import 'dart:math';
 
 void main() {
@@ -25,12 +26,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // these variables uses to keep input values
   final TextEditingController _heightController = TextEditingController();
-
   final TextEditingController _weightController = TextEditingController();
 
+  // these variables are for showing results
+  // this is result number
   late double _bmiResult = 0;
-
+  // this is result text (for example Overweight)
   late String _textResult = '';
 
   @override
@@ -42,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           'BMI Calculator',
           style: TextStyle(color: Colors.yellow, fontSize: 13.0),
         ),
+        // put app bar title in center
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
@@ -56,42 +60,48 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    color: Colors.black,
-                    height: 90.0,
-                    width: 110.0,
-                    child: TextField(
-                      controller: _heightController,
-                      textAlign: TextAlign.center,
-                      style:
-                          const TextStyle(color: Colors.yellow, fontSize: 35.0),
-                      decoration: const InputDecoration(
+                  Flexible(
+                    child: Container(
+                      color: Colors.black,
+                      height: 90.0,
+                      width: 110.0,
+                      child: TextField(
+                        controller: _heightController,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.yellow, fontSize: 35.0),
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Height in CM',
                           hintStyle: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15.0)),
+                              fontSize: 15.0),
+                        ),
+                      ),
                     ),
                   ),
-                  Container(
-                    color: Colors.black,
-                    height: 90.0,
-                    width: 110.0,
-                    child: TextField(
-                      controller: _weightController,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 35.0,
-                      ),
-                      decoration: const InputDecoration(
+                  Flexible(
+                    child: Container(
+                      color: Colors.black,
+                      height: 90.0,
+                      width: 110.0,
+                      child: TextField(
+                        controller: _weightController,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.yellow,
+                          fontSize: 35.0,
+                        ),
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Weight in KG',
                           hintStyle: TextStyle(
                               fontSize: 15.0,
                               color: Colors.grey,
-                              fontWeight: FontWeight.bold)),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -183,8 +193,9 @@ class RightBar extends StatelessWidget {
               width: barwidth,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    bottomLeft: Radius.circular(20)),
+                  topLeft: Radius.circular(20.0),
+                  bottomLeft: Radius.circular(20),
+                ),
                 color: Colors.yellow,
               ),
             ),
@@ -212,8 +223,9 @@ class LeftBar extends StatelessWidget {
               width: barwidth,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20)),
+                  topRight: Radius.circular(20.0),
+                  bottomRight: Radius.circular(20),
+                ),
                 color: Colors.yellow,
               ),
             )
